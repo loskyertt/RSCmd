@@ -1,0 +1,9 @@
+{
+    "Create cout": {
+        "prefix": "co",
+        "body": [
+            "cout << $1 << endl;"   //r/ 这里的 $1 是作为占位符
+        ],
+        "description": "Create a basic cout statement"
+    }
+}

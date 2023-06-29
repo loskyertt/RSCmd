@@ -1,0 +1,9 @@
+{
+    "Create return": {
+        "prefix": "re",
+        "body": [
+            "return $1;"   //r/ 这里的 $1 是作为占位符
+        ],
+        "description": "Create a basic return statement"
+    }
+}
