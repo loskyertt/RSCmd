@@ -245,16 +245,17 @@ void Image::displayImage()
 {
     if (data.empty())
     {
-        cout << "没有图像被打开！" << endl;
+        cout << "无法读取图像：" << getPath() << endl;
         return;
     }
 
-    // 打印图像的一些基本信息
     cout << "The image has " << getBands() << " bands, " << getRows() << " rows and " << getCols() << " columns." << endl;
 
     int displayType;
     char stretchType;
     int redBand, greenBand, blueBand;
+
+    int bandNum;
 
     cout << "Input Display Parameters ( Display Type, Stretch Type, Red, Green, Blue )" << endl;
     cout << "Input Display Type 0-Gray or 1-Color : ";
@@ -262,26 +263,49 @@ void Image::displayImage()
 
     if (displayType != 0 && displayType != 1)
     {
-        cout << "无效的显示类型！" << endl;
+        cout << "Error: Invalid display type." << endl;
         return;
     }
 
     cout << "Input L-Linear stretch, Others - default is Normal : ";
     cin >> stretchType;
 
-    cout << "Input RGB bands or gray Band in base 0 " << endl;
-    cin >> redBand >> greenBand >> blueBand;
-
-    if (redBand < 0 || redBand >= bands || greenBand < 0 || greenBand >= bands || blueBand < 0 || blueBand >= bands)
+    if (displayType == 0)
     {
-        cout << "无效的波段数！" << endl;
+        bandNum = 1;
+    }
+    else
+    {
+        bandNum = 3;
+    }
+
+    cout << "Input " << bandNum << " bands in base 0 : ";
+
+    int bandArray[3];
+
+    for (int i = 0; i < bandNum; i++)
+    {
+        cin >> bandArray[i];
+    }
+
+    redBand = bandArray[0];
+    greenBand = bandArray[1];
+    blueBand = bandArray[2];
+
+    if (cin.fail() || cin.peek() != '\n')
+    {
+        cout << "Error: Invalid number of bands." << endl;
         return;
     }
 
-    // 声明一个变量以存储显示的图像
+    if (redBand < 0 || redBand >= bands || greenBand < 0 || greenBand >= bands || blueBand < 0 || blueBand >= bands)
+    {
+        cout << "Error: Invalid band number." << endl;
+        return;
+    }
+
     Mat displayImg;
 
-    // 如果显示类型为灰色，则从图像中提取灰色带并将其分配给显示图像
     if (displayType == 0)
     {
         vector<Mat> channels(bands);
@@ -289,7 +313,6 @@ void Image::displayImage()
         displayImg = channels[redBand];
     }
 
-    // 如果显示类型为彩色，则从图像中提取RGB波段并将其合并为彩色图像
     else
     {
         vector<Mat> channels(bands);
@@ -300,46 +323,35 @@ void Image::displayImage()
         rgbChannels[2] = channels[redBand];
         merge(rgbChannels, displayImg);
 
-        // 将彩色图像从BGR转换为RGB格式
         cvtColor(displayImg, displayImg, COLOR_BGR2RGB);
 
-        // 将彩色图像从16位格式转换为8位格式
         displayImg.convertTo(displayImg, CV_8U, 1.0 / 256.0);
 
-        // 将彩色图像从RGB转换为HSV格式，以便更容易地操作亮度和对比度
         cvtColor(displayImg, displayImg, COLOR_RGB2HSV);
 
-        // 将HSV图像拆分为三个通道：色调、饱和度和值
         vector<Mat> hsvChannels(3);
         split(displayImg, hsvChannels);
 
         if (stretchType == 'L' || stretchType == 'l')
         {
-            // 在值通道中查找最小值和最大值
             double minVal, maxVal;
             minMaxLoc(hsvChannels[2], &minVal, &maxVal);
 
-            // 对值通道应用线性拉伸
             hsvChannels[2] = (hsvChannels[2] - minVal) * 255.0 / (maxVal - minVal);
         }
 
-        // 将HSV通道合并回HSV图像
         merge(hsvChannels, displayImg);
 
-        // 将HSV图像转换回RGB格式以进行显示
         cvtColor(displayImg, displayImg, COLOR_HSV2RGB);
     }
-
-    cout << "图像显示成功！按“ESC”键退出" << endl;
 
     namedWindow("Display Image", WINDOW_AUTOSIZE);
     imshow("Display Image", displayImg);
     waitKey(0);
     destroyWindow("Display Image");
 
-    // 是否更新图像信息
     char updateType;
-    cout << "你想要更新图像信息吗？(Y/N) : ";
+    cout << "你想更新图像信息吗？ (Y/N) : ";
     cin >> updateType;
 
     if (updateType == 'Y' || updateType == 'y')
@@ -350,7 +362,7 @@ void Image::displayImage()
 
     else if (updateType == 'N' || updateType == 'n')
     {
-        cout << "图像信息未被更新" << endl;
+        cout << "图像信息未被更新！" << endl;
     }
 
     else
