@@ -187,8 +187,8 @@ void Image::showHistogram()
         cvtColor(data, data, COLOR_BGR2GRAY);
         cout << "转换成功！" << endl;
         imshow("灰度图像", data);
-        waitKey(0);
 
+        waitKey(0);
         destroyWindow("灰度图像");
     }
 
@@ -219,11 +219,25 @@ void Image::showHistogram()
     // 显示直方图
     imshow("灰度直方图", canvas);
     waitKey(0);
+    destroyWindow("灰度直方图");
 
-    // 保存直方图到当前文件夹
-    string histPath = "./image/histogram.jpg";
-    imwrite(histPath, canvas);
-    cout << "直方图已保存为: " << histPath << endl;
+    // 保存直方图
+    char saveChoice;
+    cout << "是否保存直方图（Y/N）: ";
+    cin >> saveChoice;
+    if (saveChoice == 'Y' || saveChoice == 'y')
+    {
+        string histPath;
+        cout << "保存路径为：";
+        cin >> histPath;
+        imwrite(histPath, canvas);
+        cout << "直方图已保存为: " << histPath << endl;
+    }
+    else
+    {
+        cout << "直方图未被保存！" << endl;
+        return;
+    }
 }
 
 // 显示图像
@@ -341,7 +355,7 @@ void Image::displayImage()
 
     else
     {
-        cout << "无效的输入" << endl;
+        cout << "无效的输入！图像信息未被更新！" << endl;
         return;
     }
 }
@@ -361,10 +375,31 @@ void Image::rotateImage(double angle)
     Mat rotatedImage;
     warpAffine(data, rotatedImage, rotMat, data.size()); // 对图像进行仿射变换
 
-    data = rotatedImage; // 更新图像数据矩阵
-
     imshow("旋转后的图像", rotatedImage);
     waitKey(0);
+    destroyWindow("旋转后的图像");
+
+    // 是否更新图像信息
+    char updateType;
+    cout << "你想要更新图像信息吗？(Y/N) : ";
+    cin >> updateType;
+
+    if (updateType == 'Y' || updateType == 'y')
+    {
+        data = rotatedImage; // 更新图像数据矩阵
+        cout << "图像信息已被更新！" << endl;
+    }
+
+    else if (updateType == 'N' || updateType == 'n')
+    {
+        cout << "图像信息未被更新" << endl;
+    }
+
+    else
+    {
+        cout << "无效的输入！图像信息未被更新！" << endl;
+        return;
+    }
 }
 
 // 缩放图像
@@ -382,12 +417,33 @@ void Image::zoomImage(double ratio)
     Mat zoomedImage;
     resize(data, zoomedImage, Size(newWidth, newHeight));
 
-    data = zoomedImage; // 更新矩阵
-    rows = data.rows;
-    cols = data.cols;
-
     imshow("缩放后的图像", zoomedImage);
     waitKey(0);
+    destroyWindow("缩放后的图像");
+
+    // 是否更新图像信息
+    char updateType;
+    cout << "你想要更新图像信息吗？(Y/N) : ";
+    cin >> updateType;
+
+    if (updateType == 'Y' || updateType == 'y')
+    {
+        data = zoomedImage; // 更新矩阵
+        rows = data.rows;
+        cols = data.cols;
+        cout << "图像信息已被更新！" << endl;
+    }
+
+    else if (updateType == 'N' || updateType == 'n')
+    {
+        cout << "图像信息未被更新" << endl;
+    }
+
+    else
+    {
+        cout << "无效的输入！图像信息未被更新！" << endl;
+        return;
+    }
 }
 
 // 滤波图像
@@ -410,9 +466,29 @@ void Image::filterImage(Mat kernel)
 
     imshow("滤波后的图像", filteredImage);
     waitKey(0);
+    destroyWindow("滤波后的图像");
 
-    // 更新图像信息
-    data = filteredImage;
+    // 是否更新图像信息
+    char updateType;
+    cout << "你想要更新图像信息吗？(Y/N) : ";
+    cin >> updateType;
+
+    if (updateType == 'Y' || updateType == 'y')
+    {
+        data = filteredImage;
+        cout << "图像信息已被更新！" << endl;
+    }
+
+    else if (updateType == 'N' || updateType == 'n')
+    {
+        cout << "图像信息未被更新！" << endl;
+    }
+
+    else
+    {
+        cout << "无效的输入！图像信息未被更新！" << endl;
+        return;
+    }
 }
 
 // 保存图像为文件
