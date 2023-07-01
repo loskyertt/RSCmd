@@ -172,6 +172,123 @@ void Image::showStats()
     }
 }
 
+// 保存图像统计信息
+void Image::saveData(string filename)
+{
+    if (data.empty())
+    {
+        cout << "无法读取图像：" << getPath() << endl;
+        return;
+    }
+    // 打开文件
+    ofstream file(filename);
+    if (!file.is_open())
+    {
+        cout << "无法打开文件：" << filename << endl;
+        return;
+    }
+
+    // 写入文件头部信息
+    file << "Filename: " << filename << endl;
+    file << "Dims: Full Scene (" << data.total() << " points)" << endl
+         << endl;
+
+    // 统计每个波段的数据
+    vector<Mat> bands;
+    split(data, bands);
+
+    file << "Basic Stats\tMin\tMax\t\tMean\t\t\tStdev" << endl;
+    for (int i = 0; i < bands.size(); ++i)
+    {
+        Mat band = bands[i];
+
+        // 计算统计数据
+        double minVal, maxVal;
+        Mat meanVal, stdDev;
+        minMaxLoc(band, &minVal, &maxVal);
+        meanStdDev(band, meanVal, stdDev);
+
+        // 写入基本统计信息
+        file << "\tBand " << i + 1 << "\t " << minVal << "\t" << maxVal << "\t" << meanVal << "\t" << stdDev << endl;
+    }
+
+    for (int i = 0; i < bands.size(); ++i)
+    {
+        Mat band = bands[i];
+
+        // 获取波段的最小值和最大值
+        double minVal, maxVal;
+        minMaxLoc(band, &minVal, &maxVal);
+
+        // 计算直方图
+        int histSize = static_cast<int>(maxVal - minVal + 1);
+        float range[] = {static_cast<float>(minVal), static_cast<float>(maxVal + 1)};
+        const float *histRange = {range};
+        bool uniform = true, accumulate = false;
+
+        Mat hist;
+        calcHist(&band, 1, 0, Mat(), hist, 1, &histSize, &histRange, uniform, accumulate);
+
+        // 写入直方图数据
+        file << endl;
+        file << "Histogram\tDN\tNpts\tTotal\tPercent\tAcc Pct" << endl;
+
+        double total = 0.0;
+        for (int j = 0; j < histSize; ++j)
+        {
+            double npts = hist.at<float>(j);
+            total += npts;
+
+            double percent = (npts / data.total()) * 100.0;
+            double accPct = (total / data.total()) * 100.0;
+
+            file << "Band " << i + 1 << "\t\t" << j << "\t" << npts << "\t" << total << "\t" << percent << "\t" << accPct << endl;
+        }
+
+        file << endl;
+    }
+
+    for (int i = 0; i < bands.size(); ++i)
+    {
+        Mat band = bands[i];
+
+        // 写入波段信息
+        file << "Band " << i + 1 << ":\n";
+
+        // 统计灰度级数据
+        map<int, int> hist;
+        for (int y = 0; y < band.rows; ++y)
+        {
+            for (int x = 0; x < band.cols; ++x)
+            {
+                int value = band.at<uchar>(y, x);
+                hist[value]++;
+            }
+        }
+
+        // 计算总像素数
+        int totalPixels = band.rows * band.cols;
+
+        // 写入灰度级和概率
+        for (auto it = hist.begin(); it != hist.end(); ++it)
+        {
+            int grayLevel = it->first;
+            int count = it->second;
+            double probability = static_cast<double>(count) / totalPixels;
+
+            file << "灰度级: " << grayLevel << "\t";
+            file << "出现的概率: " << probability << endl;
+        }
+
+        file << endl;
+    }
+
+    // 关闭文件
+    file.close();
+
+    cout << "图像数据已保存到文件：" << filename << endl;
+}
+
 // 显示图像直方图
 void Image::showHistogram()
 {
@@ -181,63 +298,44 @@ void Image::showHistogram()
         return;
     }
 
-    if (getBands() != 1)
-    {
-        cout << "图像不是灰度图像，正在转换为灰度图像..." << endl;
-        cvtColor(data, data, COLOR_BGR2GRAY);
-        cout << "转换成功！" << endl;
-        imshow("灰度图像", data);
+    // 分割图像通道
+    vector<Mat> channels;
+    split(data, channels);
 
-        waitKey(0);
-        destroyWindow("灰度图像");
-    }
-
-    int histSize = 256;       // 灰度级数量
-    float range[] = {0, 256}; // 灰度级范围
+    // 创建直方图
+    int histSize = 256;       // 灰度级的数量
+    float range[] = {0, 256}; // 灰度级的范围
     const float *histRange = {range};
     bool uniform = true, accumulate = false;
 
-    Mat histogram;
-
-    // 计算直方图
-    calcHist(&data, 1, 0, Mat(), histogram, 1, &histSize, &histRange, uniform, accumulate);
-
-    // 创建画布
-    int canvasWidth = 512, canvasHeight = 400;
-    int binWidth = cvRound((double)canvasWidth / histSize);
-    Mat canvas(canvasHeight, canvasWidth, CV_8UC3, Scalar(0, 0, 0));
-
-    // 归一化直方图数据
-    normalize(histogram, histogram, 0, canvasHeight, NORM_MINMAX, -1, Mat());
-
-    // 绘制直方图
-    for (int i = 0; i < histSize; i++)
+    // 显示每个波段的直方图
+    for (int i = 0; i < channels.size(); ++i)
     {
-        rectangle(canvas, Point(binWidth * i, canvasHeight), Point(binWidth * (i + 1), canvasHeight - cvRound(histogram.at<float>(i))), Scalar(255, 255, 255), -1);
+        // 计算直方图
+        Mat hist;
+        calcHist(&channels[i], 1, 0, Mat(), hist, 1, &histSize, &histRange, uniform, accumulate);
+
+        // 创建直方图图像
+        int histWidth = 512, histHeight = 400;
+        int binWidth = cvRound((double)histWidth / histSize);
+        Mat histImage(histHeight, histWidth, CV_8UC3, Scalar(0, 0, 0));
+
+        // 归一化直方图值
+        normalize(hist, hist, 0, histImage.rows, NORM_MINMAX, -1, Mat());
+
+        // 绘制直方图
+        for (int j = 1; j < histSize; ++j)
+        {
+            line(histImage, Point(binWidth * (j - 1), histHeight - cvRound(hist.at<float>(j - 1))),
+                 Point(binWidth * j, histHeight - cvRound(hist.at<float>(j))),
+                 Scalar(255, 255, 255), 2, 8, 0);
+        }
+
+        // 显示直方图
+        imshow("Histogram of Band " + to_string(i + 1), histImage);
     }
 
-    // 显示直方图
-    imshow("灰度直方图", canvas);
     waitKey(0);
-    destroyWindow("灰度直方图");
-
-    // 保存直方图
-    char saveChoice;
-    cout << "是否保存直方图（Y/N）: ";
-    cin >> saveChoice;
-    if (saveChoice == 'Y' || saveChoice == 'y')
-    {
-        string histPath;
-        cout << "保存路径为：";
-        cin >> histPath;
-        imwrite(histPath, canvas);
-        cout << "直方图已保存为: " << histPath << endl;
-    }
-    else
-    {
-        cout << "直方图未被保存！" << endl;
-        return;
-    }
 }
 
 // 显示图像

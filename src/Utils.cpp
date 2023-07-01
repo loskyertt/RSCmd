@@ -53,6 +53,22 @@ void Utils::showStats(Image *image)
     image->showStats();
 }
 
+// 保存图像统计信息
+void Utils::saveData(Image *image)
+{
+    if (image == NULL)
+    {
+        cout << "没有图像被打开！" << endl;
+        return;
+    }
+
+    string filename;
+    cout << "请输入保存文件路径：";
+    cin >> filename;
+
+    image->saveData(filename);
+}
+
 // 显示图像直方图
 void Utils::showHistogram(Image *image)
 {

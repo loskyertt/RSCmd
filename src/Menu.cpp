@@ -27,6 +27,7 @@ void Menu::printMenu()
     cout << "# C – Close\t\t关闭当前图像" << endl;
     cout << "# I – Information\t输出当前图像的路径、行列值、波段数、数据类型、排列方式等信息" << endl;
     cout << "# S – Statistics\t输出图像数据统计量，若文件未打开，输出提示" << endl;
+    cout << "# B - SaveData\t保存图像的统计信息到文件中" << endl;
     cout << "# H – Histogram \t输出图像的直方图" << endl;
     cout << "# ? – Help\t\t输出本信息" << endl;
     cout << "# D - DisplayImage\t显示图像" << endl;
@@ -65,6 +66,10 @@ void Menu::handleChoice()
     case 'S':
     case 's':
         Utils::showStats(image); // 显示图像统计信息
+        break;
+    case 'B':
+    case 'b':
+        Utils::saveData(image); // 保存图像信息到文件中
         break;
     case 'H':
     case 'h':

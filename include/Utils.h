@@ -19,6 +19,7 @@ public:
     static void closeImage(Image *image);                          // 关闭图像文件，释放图像对象指针
     static void showInfo(Image *image);                            // 显示图像信息
     static void showStats(Image *image);                           // 显示图像统计信息
+    static void saveData(Image *image);                            // 保存图像统计信息
     static void showHistogram(Image *image);                       // 显示图像直方图
     static void displayImage(Image *image);                        // 显示图像
     static void rotateImage(Image *image);                         // 旋转图像
