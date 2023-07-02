@@ -45,7 +45,7 @@
                 "-l",
                 "opencv_videoio_ffmpeg452_64",
                 "-o",
-                "E:\\Desktop\\RSCmd\\build\\${workspaceFolderBasename}.exe"
+                "${workspaceFolder}\\build\\${workspaceFolderBasename}.exe"
             ],
             "options": {
                 "cwd": "${fileDirname}"

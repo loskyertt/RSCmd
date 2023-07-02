@@ -29,7 +29,7 @@ public:
     bool isEmpty();                 // 判断图像对象是否为空
     void showInfo();                // 显示图像信息
     void showStats();               // 显示图像统计信息
-    void saveData(string filename);                // 保存图像统计信息
+    void saveData(string filename); // 保存图像统计信息
     void showHistogram();           // 显示图像直方图
     void displayImage();            // 显示图像
     void rotateImage(double angle); // 旋转图像

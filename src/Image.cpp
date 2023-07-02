@@ -216,7 +216,6 @@ void Image::saveData(string filename)
     {
         Mat band = bands[i];
 
-        // 获取波段的最小值和最大值
         double minVal, maxVal;
         minMaxLoc(band, &minVal, &maxVal);
 

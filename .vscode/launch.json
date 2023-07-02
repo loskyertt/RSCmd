@@ -6,7 +6,7 @@
             "type": "cppdbg", // 配置类型，这里只能为 cppdbg
             "preLaunchTask": "build",
             "request": "launch", //请求配置类型，可以为 launch（启动）或 attach（附加）
-            "program": "E:\\Desktop\\RSCmd\\build\\${workspaceFolderBasename}.exe",
+            "program": "${workspaceFolder}\\build\\${workspaceFolderBasename}.exe",
             // 将要进行调试的程序的路径
             "args": [], // 程序调试时传递给程序的命令行参数，一般设为空即可
             "stopAtEntry": false, // 设为 true 时程序将暂停在程序入口处，一般设置为 false
