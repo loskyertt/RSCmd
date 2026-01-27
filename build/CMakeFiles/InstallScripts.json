@@ -1,0 +1,9 @@
+{
+	"InstallScripts" : 
+	[
+		"/home/sky/Dev/cpp_dev/RSCmd_redo/build/cmake_install.cmake",
+		"/home/sky/Dev/cpp_dev/RSCmd_redo/build/lib/cmake_install.cmake",
+		"/home/sky/Dev/cpp_dev/RSCmd_redo/build/src/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

@@ -1,0 +1,11 @@
+# ninja log v7
+6	138	1769533784816810158	build.ninja	25c78e169ba482c0
+6	138	1769533784816810158	/home/sky/Dev/cpp_dev/RSCmd_redo/build/cmake_install.cmake	25c78e169ba482c0
+6	138	1769533784816810158	/home/sky/Dev/cpp_dev/RSCmd_redo/build/lib/cmake_install.cmake	25c78e169ba482c0
+6	138	1769533784816810158	/home/sky/Dev/cpp_dev/RSCmd_redo/build/src/cmake_install.cmake	25c78e169ba482c0
+8	5458	1769533784842602483	lib/CMakeFiles/utils.dir/utils.cpp.o	83c2dc607ff22a1a
+9	6085	1769533784843602488	src/CMakeFiles/my_program.dir/main.cpp.o	21303d0b8c4b8905
+7	6191	1769533784841602478	lib/CMakeFiles/utils.dir/menu.cpp.o	3fbb2e8d4367f498
+2	6799	1769533784836602454	lib/CMakeFiles/utils.dir/image.cpp.o	9f1d8f7fb83cb9fc
+6800	7199	1769533791633635569	lib/libutils.so	ac821001daad4a73
+7199	7827	1769533792034747756	src/my_program	eae3528499097bcc

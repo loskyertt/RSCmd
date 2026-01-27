@@ -1,19 +1,17 @@
+#include "menu.h"
 #include <iostream>
-#include "../include/Menu.h"
 
 using namespace std;
 
-int main()
-{
-    Menu menu;        // ´´½¨²Ëµ¥¶ÔÏó
-    menu.printMenu(); // ´òÓ¡²Ëµ¥ĞÅÏ¢
-    while (!menu.getExit())
-    {
-        menu.handleChoice(); // ´¦ÀíÓÃ»§Ñ¡Ôñ
-    }
+int main() {
+  Menu menu;        // åˆ›å»ºèœå•å¯¹è±¡
+  menu.printMenu(); // æ‰“å°èœå•ä¿¡æ¯
+  while (!menu.getExit()) {
+    menu.handleChoice(); // å¤„ç†ç”¨æˆ·é€‰æ‹©
+  }
 
-    cout << "¸ĞĞ»ÄúÊ¹ÓÃÒ£¸ĞÍ¼Ïñ´¦Àí³ÌĞò£¬ÔÙ¼û£¡" << endl;
+  cout << "æ„Ÿè°¢æ‚¨ä½¿ç”¨é¥æ„Ÿå›¾åƒå¤„ç†ç¨‹åºï¼Œå†è§ï¼" << endl;
 
-    system("pause");
-    return 0;
+  system("pause");
+  return 0;
 }

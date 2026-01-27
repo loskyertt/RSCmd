@@ -1,0 +1,26 @@
+[
+{
+  "directory": "/home/sky/Dev/cpp_dev/RSCmd_redo/build",
+  "command": "/nix/store/6n5r46icm0bl55s9p5z2zgcv93m39r5l-clang-wrapper-21.1.8/bin/clang++ -Dutils_EXPORTS -I/home/sky/Dev/cpp_dev/RSCmd_redo/include -isystem /nix/store/ai0p663qykdzgi1avjkh5qafbpvx3pz0-opencv-4.12.0/include/opencv4 -g -std=gnu++20 -fPIC -o lib/CMakeFiles/utils.dir/image.cpp.o -c /home/sky/Dev/cpp_dev/RSCmd_redo/lib/image.cpp",
+  "file": "/home/sky/Dev/cpp_dev/RSCmd_redo/lib/image.cpp",
+  "output": "/home/sky/Dev/cpp_dev/RSCmd_redo/build/lib/CMakeFiles/utils.dir/image.cpp.o"
+},
+{
+  "directory": "/home/sky/Dev/cpp_dev/RSCmd_redo/build",
+  "command": "/nix/store/6n5r46icm0bl55s9p5z2zgcv93m39r5l-clang-wrapper-21.1.8/bin/clang++ -Dutils_EXPORTS -I/home/sky/Dev/cpp_dev/RSCmd_redo/include -isystem /nix/store/ai0p663qykdzgi1avjkh5qafbpvx3pz0-opencv-4.12.0/include/opencv4 -g -std=gnu++20 -fPIC -o lib/CMakeFiles/utils.dir/menu.cpp.o -c /home/sky/Dev/cpp_dev/RSCmd_redo/lib/menu.cpp",
+  "file": "/home/sky/Dev/cpp_dev/RSCmd_redo/lib/menu.cpp",
+  "output": "/home/sky/Dev/cpp_dev/RSCmd_redo/build/lib/CMakeFiles/utils.dir/menu.cpp.o"
+},
+{
+  "directory": "/home/sky/Dev/cpp_dev/RSCmd_redo/build",
+  "command": "/nix/store/6n5r46icm0bl55s9p5z2zgcv93m39r5l-clang-wrapper-21.1.8/bin/clang++ -Dutils_EXPORTS -I/home/sky/Dev/cpp_dev/RSCmd_redo/include -isystem /nix/store/ai0p663qykdzgi1avjkh5qafbpvx3pz0-opencv-4.12.0/include/opencv4 -g -std=gnu++20 -fPIC -o lib/CMakeFiles/utils.dir/utils.cpp.o -c /home/sky/Dev/cpp_dev/RSCmd_redo/lib/utils.cpp",
+  "file": "/home/sky/Dev/cpp_dev/RSCmd_redo/lib/utils.cpp",
+  "output": "/home/sky/Dev/cpp_dev/RSCmd_redo/build/lib/CMakeFiles/utils.dir/utils.cpp.o"
+},
+{
+  "directory": "/home/sky/Dev/cpp_dev/RSCmd_redo/build",
+  "command": "/nix/store/6n5r46icm0bl55s9p5z2zgcv93m39r5l-clang-wrapper-21.1.8/bin/clang++ -I/home/sky/Dev/cpp_dev/RSCmd_redo/include -isystem /nix/store/ai0p663qykdzgi1avjkh5qafbpvx3pz0-opencv-4.12.0/include/opencv4 -g -std=gnu++20 -o src/CMakeFiles/my_program.dir/main.cpp.o -c /home/sky/Dev/cpp_dev/RSCmd_redo/src/main.cpp",
+  "file": "/home/sky/Dev/cpp_dev/RSCmd_redo/src/main.cpp",
+  "output": "/home/sky/Dev/cpp_dev/RSCmd_redo/build/src/CMakeFiles/my_program.dir/main.cpp.o"
+}
+]
