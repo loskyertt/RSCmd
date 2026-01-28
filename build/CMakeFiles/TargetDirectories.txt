@@ -1,8 +1,0 @@
-/home/sky/Dev/cpp_dev/RSCmd_redo/build/CMakeFiles/edit_cache.dir
-/home/sky/Dev/cpp_dev/RSCmd_redo/build/CMakeFiles/rebuild_cache.dir
-/home/sky/Dev/cpp_dev/RSCmd_redo/build/lib/CMakeFiles/utils.dir
-/home/sky/Dev/cpp_dev/RSCmd_redo/build/lib/CMakeFiles/edit_cache.dir
-/home/sky/Dev/cpp_dev/RSCmd_redo/build/lib/CMakeFiles/rebuild_cache.dir
-/home/sky/Dev/cpp_dev/RSCmd_redo/build/src/CMakeFiles/my_program.dir
-/home/sky/Dev/cpp_dev/RSCmd_redo/build/src/CMakeFiles/edit_cache.dir
-/home/sky/Dev/cpp_dev/RSCmd_redo/build/src/CMakeFiles/rebuild_cache.dir
