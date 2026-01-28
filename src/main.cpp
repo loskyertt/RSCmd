@@ -1,17 +1,15 @@
-#include "menu.h"
 #include <iostream>
-
-using namespace std;
+#include "menu.h"
 
 int main() {
-  Menu menu;        // 创建菜单对象
-  menu.printMenu(); // 打印菜单信息
+  Menu menu;         // 创建菜单对象
+  menu.printMenu();  // 打印菜单信息
   while (!menu.getExit()) {
-    menu.handleChoice(); // 处理用户选择
+    menu.handleChoice();  // 处理用户选择
   }
 
-  cout << "感谢您使用遥感图像处理程序，再见！" << endl;
+  std::cout << "感谢您使用遥感图像处理程序，再见！" << std::endl;
 
-  system("pause");
+  // system("pause");
   return 0;
 }
