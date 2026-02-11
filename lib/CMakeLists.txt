@@ -6,10 +6,10 @@ find_package(OpenCV REQUIRED)
 # 2. 打印查找结果
 message(STATUS "OpenCV library status:")
 message(STATUS "version: ${OpenCV_VERSION}")
-message(STATUS "libraries: ${OpenCV_LIBS}")
+message(STATUS "libraries: ${OpenCV_LIBRARIES}")
 message(STATUS "include path: ${OpenCV_INCLUDE_DIRS}")
 
-# 3. 定义库（注意纠正拼写：utiles -> utils）
+# 3. 定义库
 add_library(utils SHARED
   image.cpp
   menu.cpp
@@ -17,11 +17,11 @@ add_library(utils SHARED
 )
 
 # 4. 设置头文件路径
-# PUBLIC 保证了：编译 utils 时能找到 include，链接 utils 的人也能找到 include
-target_include_directories(utils PUBLIC ${PROJECT_SOURCE_DIR}/include)
+target_include_directories(utils PRIVATE ${PROJECT_SOURCE_DIR}/include)
 
-# 5. 关键：将 OpenCV 链接到 utils 库
+# 5. 将 OpenCV 链接到 utils 库
 # 使用 PUBLIC，意味着任何链接 utils 的目标（如 main）都会自动获得 OpenCV 的头文件路径
-target_link_libraries(utils PUBLIC ${OpenCV_LIBS})
+target_include_directories(utils PUBLIC ${OpenCV_INCLUDE_DIRS})
+target_link_libraries(utils PUBLIC ${OpenCV_LIBRARIES})
 
 message("\n--------------------------------------------")
